@@ -1,0 +1,199 @@
+:root {
+	--cr-black: #000000;
+	--cr-white: #ffffff;
+	--cr-grey: #b6b6b6;
+	--cr-dark-grey: #797979;
+	--cr-purple: #651fff;
+}
+
+// COLOR
+
+html {
+	color: var(--cr-black);
+}
+.cr-black {
+	color: var(--cr-black);
+}
+.cr-white {
+	color: var(--cr-white);
+}
+.cr-grey {
+	color: var(--cr-grey);
+}
+.cr-dark-grey {
+	color: var(--cr-dark-grey);
+}
+.cr-purple {
+	color: var(--cr-purple);
+}
+
+.bg-black {
+	background-color: var(--cr-black);
+}
+.bg-white {
+	background-color: var(--cr-white);
+}
+.bg-grey {
+	background-color: var(--cr-grey);
+}
+.bg-dark-grey {
+	background-color: var(--cr-dark-grey);
+}
+.bg-purple {
+	background-color: var(--cr-purple);
+}
+
+// TYPOGRAPHY
+
+body {
+	font-family: var(--font-noto-sans-tc), Helvetica, Arial, 'PingFang TC',
+		sans-serif;
+	line-height: 1;
+	-webkit-font-smoothing: subpixel-antialiased;
+}
+
+h1 {
+	font-weight: 600;
+	font-size: 2rem;
+	line-height: 1.5;
+}
+
+h2 {
+	font-weight: 400;
+	font-size: 1.75rem;
+	line-height: 1.2;
+}
+
+h3 {
+	font-weight: 400;
+	font-size: 1.5rem;
+	line-height: 1.2;
+}
+
+h4,
+h5,
+h6,
+p,
+ol,
+ul {
+	font-weight: 400;
+	font-size: 1rem;
+	line-height: 1.2;
+}
+
+// LAYOUTS
+
+.main-wrapper {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+
+	header {
+		flex: none;
+	}
+
+	main {
+		flex: 1;
+	}
+}
+
+.f-h {
+	display: flex;
+	flex-direction: row;
+}
+
+.f-v {
+	display: flex;
+	flex-direction: column;
+}
+
+.f-w {
+	flex-wrap: wrap;
+}
+.f-nw {
+	flex-wrap: nowrap;
+}
+.f-a-s {
+	align-items: flex-start;
+}
+.f-a-c {
+	align-items: center;
+}
+.f-a-e {
+	align-items: flex-end;
+}
+.f-a-st {
+	align-items: stretch;
+}
+.f-j-s {
+	justify-content: flex-start;
+}
+.f-j-c {
+	justify-content: center;
+}
+.f-j-e {
+	justify-content: flex-end;
+}
+.f-j-b {
+	justify-content: space-between;
+}
+
+.g {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.g-1 {
+	grid-template-columns: repeat(1, 1fr);
+}
+.g-2 {
+	grid-template-columns: repeat(2, 1fr);
+}
+.g-3 {
+	grid-template-columns: repeat(3, 1fr);
+}
+.g-4 {
+	grid-template-columns: repeat(4, 1fr);
+}
+
+.gap-gutter {
+	gap: var(--s-gutter);
+}
+
+.p-fill {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.p-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate3d(-50%, -50%, 0);
+	transform: translate3d(-50%, -50%, 0);
+}
+
+/* no highlighting (via ::selection) */
+.user-select-disable {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+/* for accessibility (e.g. a form label that isn't needed for regular users) */
+.screen-reader-only {
+	position: absolute !important;
+	left: -10000px !important;
+	top: auto !important;
+	width: 1px !important;
+	height: 1px !important;
+	overflow: hidden !important;
+}
+
+.is-hidden {
+	display: none !important;
+}
