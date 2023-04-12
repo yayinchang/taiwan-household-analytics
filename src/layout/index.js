@@ -1,9 +1,10 @@
 import { Noto_Sans_TC } from 'next/font/google';
 import Head from 'next/head';
 import Header from './Header';
+import Sidebar from './Sidebar';
 
 const notoSansTC = Noto_Sans_TC({
-	weight: ['400', '700'],
+	weight: ['300', '400', '700'],
 	variable: '--font-noto-sans-tc',
 	preload: false,
 });
@@ -20,8 +21,9 @@ export default function Layout({ children }) {
 				<title>人口數、戶數按戶別及性別統計</title>
 				<meta name="description" content="人口數、戶數按戶別及性別統計" />
 			</Head>
-			<div className={`main-wrapper ${notoSansTC.variable}`}>
+			<div className={`main-wrapper ${notoSansTC.className}`}>
 				<Header />
+				<Sidebar />
 				<main>{children}</main>
 			</div>
 		</>
