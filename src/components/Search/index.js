@@ -1,25 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { getCityList, getDistrictList } from '@/lib/result.js';
 import cx from 'classnames';
 import styles from './Search.module.scss';
-
 import Selector from '@/components/Selector';
 
 export default function Search({ data }) {
 	const router = useRouter();
 	const { push } = useRouter();
+	const [responseData, setResponseData] = useState(data.responseData);
 	const yearList = ['111', '110', '109', '108', '107', '106'];
-	const [rawData, setRawData] = useState(data);
-	const [filterData, setFilterData] = useState([]);
-	const [cityList, setCityList] = useState([]);
-	const [districtList, setDistrictList] = useState([]);
-
 	const [year, setYear] = useState('111');
 	const [city, setCity] = useState(null);
 	const [district, setDistrict] = useState(null);
 	const [activeSelector, setActiveSelector] = useState(null);
 
 	useEffect(() => {
+		if (router.query?.slug && router.query?.slug[0])
+			setYear(router.query?.slug[0]);
 		if (router.query?.slug && router.query?.slug[1])
 			setCity(router.query?.slug[1]);
 		if (router.query?.slug && router.query?.slug[2])
@@ -27,108 +25,15 @@ export default function Search({ data }) {
 	}, [router]);
 
 	useEffect(() => {
-		const _filterResult = [];
-		const _cityList = [];
-		const _data = [];
-
-		if (rawData) {
-			console.log('🚀 ~ file: index.js:37 ~ useEffect ~ rawData:', rawData);
-			rawData.responseData.forEach((item) => {
-				if (!_filterResult.includes(item.site_id)) {
-					_filterResult.push(item.site_id);
-				}
-			});
-
-			_filterResult.forEach((item) => {
-				if (!_cityList.includes(item.slice(0, 3))) {
-					_cityList.push(item.slice(0, 3));
-				}
-			});
-			setCityList(_cityList);
-
-			_cityList.forEach((city) => {
-				const cityObj = Object.create({});
-				cityObj.city = city;
-				cityObj.districtList = _filterResult.filter((item) =>
-					item.includes(city)
-				);
-				cityObj.districts = [];
-
-				cityObj.districtList.forEach((district) => {
-					const districtObj = Object.create({});
-					districtObj.district = district;
-					districtObj.household_ordinary_total = 0;
-					districtObj.household_ordinary_m = 0;
-					districtObj.household_ordinary_f = 0;
-					districtObj.household_single_total = 0;
-					districtObj.household_single_m = 0;
-					districtObj.household_single_f = 0;
-
-					rawData.responseData.forEach((item) => {
-						if (item.site_id.includes(district)) {
-							districtObj.household_ordinary_total += parseInt(
-								item.household_ordinary_total
-							);
-							districtObj.household_ordinary_m += parseInt(
-								item.household_ordinary_m
-							);
-							districtObj.household_ordinary_f += parseInt(
-								item.household_ordinary_f
-							);
-							districtObj.household_single_total += parseInt(
-								item.household_single_total
-							);
-							districtObj.household_single_m += parseInt(
-								item.household_single_m
-							);
-							districtObj.household_single_f += parseInt(
-								item.household_single_f
-							);
-						}
-					});
-
-					cityObj.districts.push(districtObj);
-				});
-
-				_data.push(cityObj);
-			});
-
-			console.log(_data);
-			setFilterData(_data);
-		}
-	}, [rawData]);
-
-	useEffect(() => {
-		const activeDistrictList = filterData.filter((item) => item.city === city);
-		setDistrictList(activeDistrictList[0]?.districtList);
-	}, [filterData, city]);
-
-	useEffect(() => {
-		async function updateYear() {
+		async function fetAPI() {
 			const response = await fetch(
 				`https://www.ris.gov.tw/rs-opendata/api/v1/datastore/ODRP019/${year}`
 			);
 			const data = await response.json();
-			setRawData(data);
+			setResponseData(data.responseData);
 		}
-
-		updateYear();
+		fetAPI();
 	}, [year]);
-
-	const handleSelectYear = (selectYear) => {
-		if (selectYear !== year) {
-			setYear(selectYear);
-			setCity(null);
-			setDistrict(null);
-		}
-	};
-
-	const handleSelectCity = (selectCity) => {
-		if (selectCity !== city) {
-			setCity(selectCity);
-			setDistrict(null);
-		}
-	};
 
 	return (
 		<div className={cx(styles.search, 'c')}>
@@ -145,13 +50,19 @@ export default function Search({ data }) {
 					}}
 					classNames={styles.selectors__year}
 				>
-					{yearList.map((year, key) => (
+					{yearList.map((_year, key) => (
 						<button
 							key={key}
 							type="button"
-							onClick={() => handleSelectYear(year)}
+							className={styles.option}
+							onClick={() => {
+								if (_year !== year) {
+									setCity(null);
+									setYear(_year);
+								}
+							}}
 						>
-							{year}
+							{_year}
 						</button>
 					))}
 				</Selector>
@@ -168,13 +79,19 @@ export default function Search({ data }) {
 					}}
 					classNames={styles.selectors__city}
 				>
-					{cityList.map((city, key) => (
+					{getCityList(responseData).map((_city, key) => (
 						<button
 							key={key}
 							type="button"
-							onClick={() => handleSelectCity(city)}
+							className={styles.option}
+							onClick={() => {
+								if (_city !== city) {
+									setDistrict(null);
+									setCity(_city);
+								}
+							}}
 						>
-							{city}
+							{_city}
 						</button>
 					))}
 				</Selector>
@@ -191,10 +108,11 @@ export default function Search({ data }) {
 					}}
 					classNames={styles.selectors__district}
 				>
-					{districtList?.map((district, key) => (
+					{getDistrictList(responseData, city)?.map((district, key) => (
 						<button
 							key={key}
 							type="button"
+							className={styles.option}
 							onClick={() => setDistrict(district.replace(city, ''))}
 						>
 							{district.replace(city, '')}
