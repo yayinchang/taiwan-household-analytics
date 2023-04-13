@@ -2,6 +2,7 @@ import { Noto_Sans_TC } from 'next/font/google';
 import Head from 'next/head';
 import Header from './Header';
 import Sidebar from './Sidebar';
+import Search from '@/components/Search';
 
 const notoSansTC = Noto_Sans_TC({
 	weight: ['300', '400', '700'],
@@ -9,7 +10,7 @@ const notoSansTC = Noto_Sans_TC({
 	preload: false,
 });
 
-export default function Layout({ children }) {
+export default function Layout({ data, children }) {
 	return (
 		<>
 			<Head>
@@ -24,7 +25,10 @@ export default function Layout({ children }) {
 			<div className={`main-wrapper ${notoSansTC.className}`}>
 				<Header />
 				<Sidebar />
-				<main>{children}</main>
+				<main>
+					<Search data={data} />
+					{children}
+				</main>
 			</div>
 		</>
 	);

@@ -1,9 +1,7 @@
 import React from 'react';
 
-import Search from '@/components/Search';
-
-function Home({ data }) {
-	return <Search data={data} />;
+function Home() {
+	return <></>;
 }
 
 export async function getServerSideProps() {

@@ -8,7 +8,7 @@ import Selector from '@/components/Selector';
 export default function Search({ data }) {
 	const router = useRouter();
 	const { push } = useRouter();
-	const [responseData, setResponseData] = useState(data.responseData);
+	const [responseData, setResponseData] = useState(data?.responseData);
 	const yearList = ['111', '110', '109', '108', '107', '106'];
 	const [year, setYear] = useState('111');
 	const [city, setCity] = useState(null);
@@ -57,6 +57,7 @@ export default function Search({ data }) {
 							className={styles.option}
 							onClick={() => {
 								if (_year !== year) {
+									setDistrict(null);
 									setCity(null);
 									setYear(_year);
 								}
