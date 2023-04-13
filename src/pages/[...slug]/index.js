@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { getResultObject } from '@/lib/result.js';
 import styles from './Result.module.scss';
-import Population from '@/components/Highcharts/Population';
+import Column from '@/components/Highcharts/Column';
+import Pie from '@/components/Highcharts/Pie';
 
 function Result({ data }) {
 	const router = useRouter();
@@ -26,7 +27,6 @@ function Result({ data }) {
 	}, [data.responseData, city, district]);
 
 	useEffect(() => {
-		console.log(result);
 		setIsLoad(true);
 	}, [result]);
 
@@ -34,12 +34,18 @@ function Result({ data }) {
 		<div className={styles.wrapper}>
 			<h2 className="t-center">{heading}</h2>
 			{isLoad && result && (
-				<Population
-					householdOrdinaryMale={result[0].household_ordinary_m}
-					householdOrdinaryFemale={result[0].household_ordinary_f}
-					householdSingleMale={result[0].household_single_m}
-					householdSingleFemale={result[0].household_single_f}
-				/>
+				<>
+					<Column
+						householdOrdinaryMale={result[0].household_ordinary_m}
+						householdOrdinaryFemale={result[0].household_ordinary_f}
+						householdSingleMale={result[0].household_single_m}
+						householdSingleFemale={result[0].household_single_f}
+					/>
+					<Pie
+						householdOrdinaryTotal={result[0].household_ordinary_total}
+						householdSingleTotal={result[0].household_single_total}
+					/>
+				</>
 			)}
 		</div>
 	);
