@@ -21,6 +21,16 @@
 	&__district {
 		min-width: 165px;
 	}
+
+	@media screen and (max-width: 600px) {
+		width: 100%;
+		flex-direction: column;
+
+		&__city,
+		&__district {
+			width: 100%;
+		}
+	}
 }
 
 .divider {

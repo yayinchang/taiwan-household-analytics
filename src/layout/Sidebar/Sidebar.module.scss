@@ -1,7 +1,10 @@
 .sidebar {
-	display: block;
+	position: absolute;
+	left: 0;
+	bottom: 0;
 	width: min-content;
-	height: 100%;
+	height: calc(100% - 48px);
+	opacity: 0.2;
 }
 
 .sidebar__svg {

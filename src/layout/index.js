@@ -25,9 +25,11 @@ export default function Layout({ data, children }) {
 			<div className={`main-wrapper ${notoSansTC.className}`}>
 				<Header />
 				<Sidebar />
-				<main className="c">
-					<Search data={data} />
-					{children}
+				<main>
+					<div className="c">
+						<Search data={data} />
+						{children}
+					</div>
 				</main>
 			</div>
 		</>

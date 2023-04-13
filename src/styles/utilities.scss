@@ -9,7 +9,7 @@
 	--s-edge: 0.75rem;
 	--s-section: 1.5rem;
 	--s-section-large: 3rem;
-	--s-container-max: 1280px;
+	--s-container-max: 1000px;
 }
 
 @media screen and (max-width: 600px) {
@@ -103,30 +103,20 @@ ul {
 // LAYOUTS
 
 .main-wrapper {
-	min-height: 100vh;
-	display: grid;
-	grid-template-areas:
-		'header header'
-		'aside main';
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto 1fr;
-
-	header {
-		grid-area: header;
-	}
-
-	aside {
-		grid-area: aside;
-	}
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 
 	main {
-		grid-area: main;
+		height: 100%;
+		overflow-x: hidden;
+		overflow-y: auto;
 	}
 }
 
 .c {
 	position: relative;
-	width: calc(100vw - var(--s-edge) * 2);
+	width: calc(100vw - 2rem);
 	max-width: var(--s-container-max);
 	margin-left: auto;
 	margin-right: auto;
