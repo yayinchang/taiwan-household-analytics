@@ -1,7 +1,7 @@
 export function getSiteList(data) {
 	const result = [];
 
-	data.forEach((item) => {
+	data?.forEach((item) => {
 		if (!result.includes(item.site_id)) {
 			result.push(item.site_id);
 		}
@@ -14,7 +14,7 @@ export function getCityList(data) {
 	const siteList = getSiteList(data);
 	const result = [];
 
-	siteList.forEach((site) => {
+	siteList?.forEach((site) => {
 		if (!result.includes(site.slice(0, 3))) {
 			result.push(site.slice(0, 3));
 		}
