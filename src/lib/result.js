@@ -31,7 +31,7 @@ export function getDistrictList(data, city) {
 	return result;
 }
 
-export function getResultObject(data) {
+export function getFilteredObject(data) {
 	const siteList = getSiteList(data);
 	const cityList = getCityList(data);
 	const result = [];
@@ -78,4 +78,12 @@ export function getResultObject(data) {
 	});
 
 	return result;
+}
+
+export function getResultObject(data, city, district) {
+	const filteredResult = getFilteredObject(data);
+	const result = filteredResult.filter((item) => item.city == city);
+	return result[0]?.districts.filter((item) =>
+		item.district.includes(district)
+	);
 }

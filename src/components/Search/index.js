@@ -36,7 +36,7 @@ export default function Search({ data }) {
 	}, [year]);
 
 	return (
-		<div className={cx(styles.search, 'c')}>
+		<div className={cx(styles.search)}>
 			<h1>人口數、戶數按戶別及性別統計</h1>
 			<div className={styles.selectors}>
 				<Selector
